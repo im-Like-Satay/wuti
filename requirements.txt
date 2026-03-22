@@ -1,0 +1,5 @@
+uvicorn
+pyinstaller
+google-genai
+subprocces
+python-dotenv
