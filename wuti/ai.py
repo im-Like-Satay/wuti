@@ -11,12 +11,18 @@ load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 
-def callAi(inputData):
+def callAi(inputData: str | None = None):
+    if inputData is None:
+        return "[WARNING] function 'callAi` no contained input"
     client = genai.Client(api_key=GEMINI_API_KEY)
 
     response = client.models.generate_content(
         model="gemini-2.5-flash-lite",
         config=types.GenerateContentConfig(temperature=0.1, system_instruction=sm),
-        contents=inputData,
+        contents=str(inputData),
     )
     print(response.text)
+
+
+if __name__ == "__main__":
+    callAi()
