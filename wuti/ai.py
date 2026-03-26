@@ -48,7 +48,7 @@ def call_ai(inputData: str | None = None, temperature: float = 0.1):
     if inputData is None:
         return "[WARNING] function 'callAi` no contained input"
 
-    return llm.invoke([SystemMessage(SYSTEM_MESSAGE), HumanMessage(inputData)]).content
+    return llm.invoke([SystemMessage(SYSTEM_MESSAGE), HumanMessage(str(inputData))]).content
 
 
 SYSTEM_MESSAGE = """

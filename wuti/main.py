@@ -1,5 +1,5 @@
-from wuti.ai import call_ai
-from wuti.parser import parse_log
+from ai import call_ai
+from parser import parse_log
 
 
 def main():
