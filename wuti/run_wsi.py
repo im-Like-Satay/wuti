@@ -3,15 +3,18 @@ import subprocess
 from catch_input import catch_wsi
 
 
-def run_wsi(perintah: str):
+def run_wsi():
     """fungsi ini untuk menjalankan perinah dari fungsi catch_wsi"""
     inputWSIUser = catch_wsi()
-    runWSIProcess = subprocess.run(
-        inputWSIUser, shell=True, capture_output=True, text=True
-    )
-
-    print("[INFO] funct `run_wsi' running", runWSIProcess)
-    return runWSIProcess
+    try:
+        runWSIProcess = subprocess.run(
+            inputWSIUser, shell=True, capture_output=True, text=True
+        )
+        return str(runWSIProcess)
+    except Exception as e:
+        print(e)
+    except KeyboardInterrupt:
+        pass
 
 
 if __name__ == "__main__":

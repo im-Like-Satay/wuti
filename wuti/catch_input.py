@@ -1,14 +1,14 @@
-import argparse
+import argparse as arg
 
 
-def catch_wsi(inputData: str | None = None) -> str:
-    """Fungsi ini untuk menangkap input user dan diteruskan ke fungsi `run_wsi'"""
+def catch_wsi():
+    """Fungsi ini untuk menangkap input user menggunakan lib bawaan python argeparse dan diteruskan ke fungsi `run_wsi'"""
 
-    parser = argparse.ArgumentParser(description="Alat utilitas wsi canggih")
-    parser.add_argument("command", type=str, help="Masukkan sebuah input")
+    parser = arg.ArgumentParser(description="Alat utilitas wsi canggih")
+    parser.add_argument(
+        "command", nargs=arg.REMAINDER, type=str, help="Masukkan sebuah input"
+    )
     args = parser.parse_args()
-
-    print(args.command)
 
     return args.command
 
