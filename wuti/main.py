@@ -1,13 +1,15 @@
-from ai import call_ai
-from parser import parse_log
+from wuti.ai import call_ai
+from wuti.parser import parse_log
 
 
 def main():
     try:
-        parseLog = parse_log()
-        result = call_ai(parseLog)
+        error = parse_log()
+        if error is None:
+            return
+        result = call_ai(error)
 
-        return result
+        print(result)
     except Exception as e:
         print(e)
     except KeyboardInterrupt:

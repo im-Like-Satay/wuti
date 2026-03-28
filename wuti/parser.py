@@ -1,6 +1,6 @@
 import re
 
-from run_wsi import run_wsi
+from wuti.run_wsi import run_wsi
 
 
 def parse_log():
@@ -10,7 +10,7 @@ def parse_log():
     regexPattern = r"'^(?:.*?(?P<error_type>[A-Z][a-zA-Z0-9_]*(?:Error|Exception|Warning|Exit|Interrupt|Stop|NotFound|Failure))\s*:\s*(?P<error_msg>.*))$"
 
     try:
-        resultParserLog = re.findall(regexPattern, logData)
+        resultParserLog = str(re.findall(regexPattern, logData))
         print(resultParserLog)
         return resultParserLog
     except Exception as e:

@@ -1,54 +1,27 @@
 import os
-from enum import Enum
 
 from dotenv import load_dotenv
-from langchain_anthropic import ChatAnthropic
-from langchain_core.messages import HumanMessage, SystemMessage
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_groq import ChatGroq
-from langchain_openai import ChatOpenAI
+from google import genai
+from google.genai import types
 
 load_dotenv()
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-ANTROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 
 
-class Provider(Enum):
-    groq = "groq"
-    gemini = "gemini"
-    openai = "openai"
-    anthropic = "anthropic"
-
-
-PROVIDER = os.getenv("PROVIDER")
-PROVIDER = Provider(PROVIDER)
-
-
-def call_ai(inputData: str | None = None, temperature: float = 0.1):
-    # set model for each provider
-    if PROVIDER == Provider.groq:
-        llm = ChatGroq(
-            model="groq/compound", api_key=GROQ_API_KEY, temperature=temperature
-        )
-    elif PROVIDER == Provider.gemini:
-        llm = ChatGoogleGenerativeAI(
-            model="gemini-3-flash", api_key=GEMINI_API_KEY, temperature=temperature
-        )
-    elif PROVIDER == Provider.openai:
-        llm = ChatOpenAI(
-            model="gpt-5.4", api_key=OPENAI_API_KEY, temperature=temperature
-        )
-    elif PROVIDER == Provider.anthropic:
-        llm = ChatAnthropic(
-            model="claude-sonnet-4-6", api_key=ANTROPIC_API_KEY, temperature=temperature
-        )
+def call_ai(inputData: str | None = None) -> str:
 
     if inputData is None:
         return "[WARNING] function 'callAi` no contained input"
 
-    return llm.invoke([SystemMessage(SYSTEM_MESSAGE), HumanMessage(str(inputData))]).content
+    client = genai.Client(api_key=GEMINI_API_KEY)
+
+    response = client.models.generate_content(
+        model="gemini-2.5-flash-lite",
+        contents=str(inputData),
+        config=types.GenerateContentConfig(system_instruction=SYSTEM_MESSAGE),
+    )
+
+    return str(response.text)
 
 
 SYSTEM_MESSAGE = """

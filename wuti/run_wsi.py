@@ -1,20 +1,20 @@
 import subprocess
 
-from catch_input import catch_wsi
+from wuti.catch_input import catch_wsi
 
 
 def run_wsi():
     """fungsi ini untuk menjalankan perinah dari fungsi catch_wsi"""
     inputWSIUser = catch_wsi()
     try:
-        runWSIProcess = subprocess.run(
+        result = subprocess.run(
             inputWSIUser, shell=True, capture_output=True, text=True
         )
-        return str(runWSIProcess)
+        output = result.stdout + result.stderr
+        print(output)
+        return output
     except Exception as e:
-        print(e)
-    except KeyboardInterrupt:
-        pass
+        return str(e)
 
 
 if __name__ == "__main__":
