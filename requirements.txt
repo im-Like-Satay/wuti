@@ -1,5 +1,6 @@
 pyinstaller
 python-dotenv
+setuptools
 
 langchain
 langchain-groq
